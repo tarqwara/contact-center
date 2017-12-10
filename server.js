@@ -1,8 +1,7 @@
-import express from 'express';
-import {twiml} from 'twilio';
+const express = require('express');
+const VoiceResponse = require('twilio').twiml.VoiceResponse;
 
 const app = express();
-const VoiceResponse = twiml.VoiceResponse;
 const PORT = process.env.PORT || 5000;
 
 app
