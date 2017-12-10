@@ -1,0 +1,15 @@
+{
+  "name": "contact-center",
+  "version": "0.0.1",
+  "description": "Twilio Contact Center",
+  "main": "index.js",
+  "engines": {
+    "node": "8.9.1"
+  },
+  "scripts": {
+    "start": "node index.js"
+  },
+  "repository": "git@github.com:tarqwara/contact-center.git",
+  "author": "Erki Kütt",
+  "license": "MIT"
+}
