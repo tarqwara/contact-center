@@ -6,10 +6,12 @@ const PORT = process.env.PORT || 5000;
 
 app
   .post('/voice', (req, res) => {
-    const message = new VoiceResponse();
-    message.say("Thank you for calling us, please leave a message after the beep");
+    const twiml = new VoiceResponse();
+    twiml.say("Thank you for calling us, please leave a message after the beep");
+    twiml.record();
+    twiml.hangup();
 
     res.type('text/xml');
-    res.send(message.toString());
+    res.send(twiml.toString());
   })
   .listen(PORT, () => console.log(`Listening on port ${PORT}`));
