@@ -2,18 +2,26 @@
   "name": "contact-center",
   "version": "0.0.1",
   "description": "Twilio Contact Center",
-  "main": "server.js",
+  "main": "dist/server.js",
   "engines": {
     "node": "8.9.3"
   },
   "scripts": {
-    "start": "node server.js"
+    "clean": "rimraf dist",
+    "build": "npm run clean && mkdir -p dist && babel src -s -D -d dist",
+    "start": "node --inspect dist/server.js"
   },
   "repository": "git@github.com:tarqwara/contact-center.git",
   "author": "Erki Kütt",
   "license": "MIT",
   "dependencies": {
+    "@babel/cli": "^7.0.0-beta.35",
+    "@babel/core": "^7.0.0-beta.35",
+    "@babel/preset-env": "^7.0.0-beta.35",
     "express": "^4.16.2",
+    "pug": "^2.0.0-rc.4",
+    "rimraf": "^2.6.2",
     "twilio": "^3.10.1"
-  }
+  },
+  "devDependencies": {}
 }
