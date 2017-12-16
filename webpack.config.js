@@ -1,51 +1,42 @@
 const path = require('path');
 const nodeExternals = require('webpack-node-externals');
 
+const commonConfig = {
+  output: {
+    path: path.join(__dirname, 'dist'),
+    filename: '[name].js',
+    publicPath: '/'
+  },
+  module: {
+    rules: [
+      {
+        test: /\.jsx?$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader'
+        }
+      }
+    ]
+  },
+  resolve: {
+    extensions: ['.js', '.jsx']
+  },
+  devtool: "source-map"
+};
+
 module.exports = [
   {
-    entry: path.join(__dirname, 'src/server/index.js'),
-    output: {
-      path: path.join(__dirname, 'dist'),
-      filename: 'server.js',
-      publicPath: '/'
+    entry: {
+      server: path.join(__dirname, 'src/server/index.js')
     },
     target: 'node',
     externals: nodeExternals(),
-    module: {
-      rules: [
-        {
-          test: /\.jsx?$/,
-          exclude: /node_modules/,
-          use: {
-            loader: 'babel-loader'
-          }
-        }
-      ]
-    },
-    resolve: {
-      extensions: ['.js', '.jsx']
-    }
+    ...commonConfig
   },
   {
-    entry: path.join(__dirname, 'src/client/index.js'),
-    output: {
-      path: path.join(__dirname, 'dist'),
-      filename: 'bundle.js',
-      publicPath: '/'
+    entry: {
+      bundle: path.join(__dirname, 'src/client/index.js')
     },
-    module: {
-      rules: [
-        {
-          test: /\.jsx?$/,
-          exclude: /node_modules/,
-          use: {
-            loader: 'babel-loader'
-          }
-        }
-      ]
-    },
-    resolve: {
-      extensions: ['.js', '.jsx']
-    }
+    ...commonConfig
   }
 ];

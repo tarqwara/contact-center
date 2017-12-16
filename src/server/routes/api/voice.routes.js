@@ -1,9 +1,9 @@
 import {Router} from 'express';
-import {createCallTwiml, getCalls} from '../../service/voice.service';
+import {createCallTwiml, getCallsWithRecordings} from '../../../service/voice.service';
 
 export default Router()
   .get('/', async (req, res) => {
-    const calls = await getCalls();
+    const calls = await getCallsWithRecordings();
     res.send(calls);
   })
   .post('/', (req, res) => {
