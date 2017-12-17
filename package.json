@@ -7,8 +7,8 @@
     "node": "8.9.3"
   },
   "scripts": {
-    "build": "webpack -w",
-    "dev": "node --inspect -r dotenv/config dist/server.js",
+    "build": "rimraf dist && webpack -w",
+    "start": "node --inspect -r dotenv/config dist/server.js",
     "production": "rimraf dist && webpack && node dist/server.js"
   },
   "repository": "git@github.com:tarqwara/contact-center.git",
@@ -20,11 +20,22 @@
     "@babel/plugin-transform-react-jsx": "^7.0.0-beta.35",
     "@babel/plugin-transform-regenerator": "^7.0.0-beta.35",
     "@babel/preset-env": "^7.0.0-beta.35",
+    "autoprefixer": "^7.2.3",
     "babel-loader": "^8.0.0-beta.0",
+    "bootstrap": "^4.0.0-beta.2",
+    "css-loader": "^0.28.7",
+    "ejs": "^2.5.7",
     "express": "^4.16.2",
+    "html-webpack-plugin": "^2.30.1",
+    "jquery": "^3.2.1",
+    "node-sass": "^4.7.2",
+    "popper.js": "^1.12.9",
+    "postcss-loader": "^2.0.9",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "rimraf": "^2.6.2",
+    "sass-loader": "^6.0.6",
+    "style-loader": "^0.19.1",
     "twilio": "^3.10.1",
     "webpack": "^3.10.0",
     "webpack-node-externals": "^1.6.0"
