@@ -7,8 +7,9 @@
     "node": "8.9.3"
   },
   "scripts": {
-    "build": "webpack",
-    "start": "node --inspect dist/server.js"
+    "build": "webpack -w",
+    "dev": "node --inspect -r dotenv/config dist/server.js",
+    "production": "rimraf dist && webpack && node dist/server.js"
   },
   "repository": "git@github.com:tarqwara/contact-center.git",
   "author": "Erki Kütt",
@@ -23,9 +24,12 @@
     "express": "^4.16.2",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
+    "rimraf": "^2.6.2",
     "twilio": "^3.10.1",
     "webpack": "^3.10.0",
     "webpack-node-externals": "^1.6.0"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "dotenv": "^4.0.0"
+  }
 }
