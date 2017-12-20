@@ -1,9 +1,11 @@
-import {twiml} from 'twilio';
+import twilio from 'twilio';
 import twilioApi, {baseUrl} from 'Api/twilio.api';
 import url from 'url';
 
+const VoiceResponse = twilio.twiml.VoiceResponse;
+
 export const createCallTwiml = () => {
-  const twiml = new twiml.VoiceResponse();
+  const twiml = new VoiceResponse();
   twiml.say("Thank you for calling us, please leave a message after the beep");
   twiml.record();
   twiml.hangup();
