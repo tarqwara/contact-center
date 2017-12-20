@@ -9,7 +9,7 @@ export const createCallTwiml = () => {
   twiml.say("Thank you for calling us, please leave a message after the beep");
   twiml.record();
   twiml.hangup();
-  twiml.message('Thank you for contacting us, will get back to you as shortly as we can');
+  // twiml.message('Thank you for contacting us, will get back to you as shortly as we can');
   return twiml;
 };
 
