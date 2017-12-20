@@ -11,29 +11,29 @@ class VoiceMessage extends Component {
     };
   }
 
-  initListened(sid) {
-    db.get(sid)
-      .then(doc => {
-        const {listened} = doc;
-        this.setState({
-          listened
-        });
-      })
-      .catch(() => {
-        db.put({
-          _id: sid,
-          listened: false
-        });
+  async initListened(sid) {
+    try {
+      const doc = await db.get(sid);
+      const {listened} = doc;
+      this.setState({
+        listened
       });
+    } catch (err) {
+      db.put({
+        _id: sid,
+        listened: false
+      });
+    }
   }
 
   addOnPlayEvent(sid) {
-    this.audio.onplay = () => {
-      db.get(sid)
-        .then(doc => {
-          doc.listened = true;
-          return db.put(doc);
-        });
+    this.audio.onplay = async () => {
+      const doc = await db.get(sid);
+      doc.listened = true;
+      db.put(doc);
+      this.setState({
+        listened: true
+      });
     };
   }
 
