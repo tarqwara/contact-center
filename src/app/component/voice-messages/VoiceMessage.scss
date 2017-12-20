@@ -1,0 +1,9 @@
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+
+i.material-icons {
+  &.fiber-new {
+    font-size: 36px;
+    color: $success;
+  }
+}

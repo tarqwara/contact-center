@@ -2,6 +2,7 @@ const path = require('path');
 const nodeExternals = require('webpack-node-externals');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const commonConfig = {
   output: {
@@ -37,7 +38,7 @@ const serverConfig = {
 
 const clientConfig = {
   entry: {
-    client: path.join(__dirname, 'src/client/index.js')
+    app: path.join(__dirname, 'src/app/index.js')
   },
   module: {
     rules: [
@@ -50,22 +51,23 @@ const clientConfig = {
       },
       {
         test: /\.scss$/,
-        use: [{
-          loader: 'style-loader',
-        }, {
-          loader: 'css-loader',
-        }, {
-          loader: 'postcss-loader',
-          options: {
-            plugins: function() {
-              return [
-                require('autoprefixer')
-              ];
-            }
-          }
-        }, {
-          loader: 'sass-loader'
-        }]
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: [
+            'css-loader',
+            {
+              loader: 'postcss-loader',
+              options: {
+                plugins: function() {
+                  return [
+                    require('autoprefixer')
+                  ];
+                }
+              }
+            },
+            'sass-loader'
+          ]
+        })
       }
     ]
   },
@@ -79,7 +81,8 @@ const clientConfig = {
     new HtmlWebpackPlugin({
       title: 'Contact center',
       template: path.join(__dirname, 'src/server/index.html')
-    })
+    }),
+    new ExtractTextPlugin('styles.css')
   ],
   ...commonConfig
 };
