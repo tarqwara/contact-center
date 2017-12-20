@@ -1,6 +1,6 @@
 import {twiml} from 'twilio';
-import twilioApi, {baseUrl} from '../../server/api/twilio.api';
-import path from 'path';
+import twilioApi, {baseUrl} from 'Api/twilio.api';
+import url from 'url';
 
 export const createCallTwiml = () => {
   const twiml = new twiml.VoiceResponse();
@@ -16,10 +16,11 @@ const getRecordings = () => twilioApi.recordings.list();
 const getCall = sid => twilioApi.calls.get(sid).fetch();
 
 const createVoiceMessage = async recording => {
-  const {callSid, uri, duration} = recording;
+  const {callSid, duration, sid, uri} = recording;
   const {from, endTime} = await getCall(callSid);
-  const recordingUrl = path.join(baseUrl, uri.replace('.json', ''));
+  const recordingUrl = url.resolve(baseUrl, uri.replace('.json', ''));
   return {
+    sid,
     duration,
     from,
     date: endTime,

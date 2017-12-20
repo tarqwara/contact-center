@@ -1,5 +1,5 @@
 import {Router} from 'express';
-import {createCallTwiml, getVoiceMessages} from './../../service/voice.service';
+import {createCallTwiml, getVoiceMessages} from 'Service/voice.service';
 
 export default Router()
   .get('/', async (req, res) => {

@@ -11,7 +11,13 @@ const commonConfig = {
     publicPath: '/dist'
   },
   resolve: {
-    extensions: ['.js', '.jsx', '.scss']
+    alias: {
+      Api: path.resolve(__dirname, 'src/server/api'),
+      Component: path.resolve(__dirname, 'src/app/component'),
+      Db: path.resolve(__dirname, 'src/app/db'),
+      Service: path.resolve(__dirname, 'src/server/service')
+    },
+    extensions: ['.js', '.jsx']
   },
   devtool: "source-map"
 };

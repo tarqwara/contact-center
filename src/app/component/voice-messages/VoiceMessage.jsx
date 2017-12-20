@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import moment from 'moment';
+import db from 'Db/voice-messages.db';
 import './VoiceMessage.scss';
 
 class VoiceMessage extends Component {
@@ -10,12 +11,37 @@ class VoiceMessage extends Component {
     };
   }
 
-  componentDidMount() {
-    this.audio.onplay = () => {
+  async initListened(sid) {
+    try {
+      const doc = await db.get(sid);
+      const {listened} = doc;
       this.setState({
+        listened
+      });
+    } catch (err) {
+      db.put({
+        _id: sid,
+        listened: false
+      });
+    }
+  }
+
+  addOnPlayEvent(sid) {
+    this.audio.onplay = async () => {
+      const doc = await db.get(sid);
+      const {_rev} = doc;
+      db.put({
+        _id: sid,
+        _rev,
         listened: true
       });
     };
+  }
+
+  async componentDidMount() {
+    const {sid} = this.props.message;
+    await this.initListened(sid);
+    this.addOnPlayEvent(sid);
   }
 
   formatDate(date) {
