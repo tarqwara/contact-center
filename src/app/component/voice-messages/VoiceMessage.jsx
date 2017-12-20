@@ -51,7 +51,7 @@ class VoiceMessage extends Component {
     const {from, date, recordingUrl} = this.props.message;
     return (
       <div
-        className="card bg-light border-primary">
+        className="card bg-light border-primary mt-2">
         <div className="card-body">
           <div className="d-flex justify-content-between">
             <div className="d-flex align-items-center">
