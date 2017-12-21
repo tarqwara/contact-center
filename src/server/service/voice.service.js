@@ -39,3 +39,13 @@ export const getVoiceMessages = async () => {
   }
   return voiceMessages;
 };
+
+export const deleteRecording = async sid => {
+  try {
+    await twilioApi.recordings(sid).remove();
+    return true;
+  } catch (err) {
+    console.error(`Could not delete recording with sid ${sid}: ${err}`);
+    return false;
+  }
+};

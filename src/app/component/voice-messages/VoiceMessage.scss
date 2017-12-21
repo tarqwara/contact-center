@@ -1,9 +1,33 @@
 @import "~bootstrap/scss/functions";
 @import "~bootstrap/scss/variables";
 
-i.material-icons {
-  &.fiber-new {
-    font-size: 36px;
-    color: $success;
+.card {
+  .delete-container {
+    width: 60px;
+    background-color: $danger;
+
+    i.material-icons {
+      &.delete {
+        font-size: 24px;
+        color: $white;
+
+        &:hover {
+          color: darken($white, 10%);
+        }
+      }
+    }
+  }
+
+  i.material-icons {
+    cursor: pointer;
+
+    &.fiber-new {
+      font-size: 36px;
+      color: $success;
+
+      &:hover {
+        color: darken($success, 10%);
+      }
+    }
   }
 }
