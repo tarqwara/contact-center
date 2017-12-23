@@ -4,13 +4,20 @@ import url from 'url';
 
 const VoiceResponse = twilio.twiml.VoiceResponse;
 
-export const createCallTwiml = () => {
+export const createCallRecordTwiml = message => {
   const twiml = new VoiceResponse();
-  twiml.say("Thank you for calling us, please leave a message after the beep");
+  twiml.say(message);
   twiml.record();
   twiml.hangup();
-  // twiml.message('Thank you for contacting us, will get back to you as shortly as we can');
   return twiml;
+};
+
+export const sendSmsMessage = (body, from, to) => {
+  twilioApi.messages.create({
+    body,
+    from,
+    to
+  });
 };
 
 const getRecordings = () => twilioApi.recordings.list();

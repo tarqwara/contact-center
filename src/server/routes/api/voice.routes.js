@@ -1,5 +1,5 @@
 import {Router} from 'express';
-import {createCallTwiml, getVoiceMessages, deleteRecording} from 'Service/voice.service';
+import {createCallRecordTwiml, sendSmsMessage, getVoiceMessages, deleteRecording} from 'Service/voice.service';
 
 export default Router()
   .get('/', async (req, res) => {
@@ -7,9 +7,14 @@ export default Router()
     res.send(voiceMessages);
   })
   .post('/', (req, res) => {
-    const twiml = createCallTwiml();
+    const twiml = createCallRecordTwiml('Thank you for calling us, please leave a message after the beep');
     res.type('text/xml');
     res.send(twiml.toString());
+  })
+  .post('/completed', (req, res) => {
+    const {from, to} = req.params;
+    sendSmsMessage('Thank you for contacting us, will get back to you as shortly as we can', to, from);
+    res.status(200).end();
   })
   .delete('/:sid', async (req, res) => {
     const {sid} = req.params;
