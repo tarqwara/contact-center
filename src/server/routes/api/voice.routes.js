@@ -12,8 +12,8 @@ export default Router()
     res.send(twiml.toString());
   })
   .post('/completed', (req, res) => {
-    console.log(req.params);
-    const {from, to} = req.params;
+    console.log(req.body);
+    const {from, to} = req.body;
     sendSmsMessage('Thank you for contacting us, will get back to you as shortly as we can', to, from);
     res.status(200).end();
   })
