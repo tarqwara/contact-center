@@ -1,56 +1,41 @@
 import React, {Component} from 'react';
-import moment from 'moment';
 import {toast} from 'react-toastify';
 import swal from 'sweetalert';
 import axios from 'axios';
-import db from 'Db/voice-messages.db';
 import './VoiceMessage.scss';
 
 class VoiceMessage extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      listened: false
-    };
   }
 
-  async initListened(sid) {
-    try {
-      const doc = await db.get(sid);
-      const {listened} = doc;
-      this.setState({
-        listened
-      });
-    } catch (err) {
-      db.put({
-        _id: sid,
-        listened: false
-      });
-    }
-  }
-
-  addOnPlayEvent(sid) {
+  addListenedEvent(id) {
     this.audio.onplay = async () => {
-      const doc = await db.get(sid);
-      doc.listened = true;
-      db.put(doc);
-      this.setState({
-        listened: true
-      });
+      const {listened} = this.props.message;
+      if (listened) {
+        return;
+      }
+      try {
+        await axios.post(`/api/voice/${id}/listened`);
+        this.props.onListened(id);
+      } catch (err) {
+        console.error(`Could not update listened field of voice message ${id}`);
+      }
     };
   }
 
   async componentDidMount() {
-    const {sid} = this.props.message;
-    await this.initListened(sid);
-    this.addOnPlayEvent(sid);
+    const {id, recordingUrl} = this.props.message;
+    if (recordingUrl) {
+      this.addListenedEvent(id);
+    }
   }
 
   formatDate(date) {
-    return moment(date).format('MMMM Do YYYY, h:mm:ss a');
+    return new Date(date).toLocaleString()
   }
 
-  async delete(sid) {
+  async delete(id) {
     const confirm = await swal({
       title: "Are you sure?",
       buttons: true,
@@ -61,20 +46,18 @@ class VoiceMessage extends Component {
     }
 
     try {
-      await axios.delete(`/api/voice/${sid}`);
+      await axios.delete(`/api/voice/${id}`);
     } catch (err) {
       toast.error('Could not delete voice message');
       return;
     }
 
-    const doc = await db.get(sid);
-    await db.remove(doc._id, doc._rev);
     toast.success('Voice message deleted');
-    this.props.onDelete(sid);
+    this.props.onDelete(id);
   }
 
   render() {
-    const {from, date, recordingUrl, sid} = this.props.message;
+    const {id, from, created, listened, recordingUrl} = this.props.message;
     return (
       <div
         className="card bg-light border-primary d-flex flex-row mt-2">
@@ -82,7 +65,7 @@ class VoiceMessage extends Component {
           <div className="d-flex justify-content-between">
             <div className="d-flex align-items-center">
               {
-                !this.state.listened &&
+                !listened &&
                 <div className="mr-3">
                   <i className="material-icons fiber-new">fiber_new</i>
                 </div>
@@ -92,23 +75,27 @@ class VoiceMessage extends Component {
                   {from}
                 </h5>
                 <h6 className="card-subtitle text-muted">
-                  {this.formatDate(date)}
+                  {this.formatDate(created)}
                 </h6>
               </div>
             </div>
             <div className="d-flex align-items-center">
-              <audio controls
-                     ref={audio => {
-                       this.audio = audio;
-                     }}>
-                <source src={recordingUrl} type="audio/wav"/>
-              </audio>
+              {
+                recordingUrl ?
+                  <audio controls
+                         ref={audio => {
+                           this.audio = audio;
+                         }}>
+                    <source src={recordingUrl} type="audio/wav"/>
+                  </audio> :
+                  <em>No recording available</em>
+              }
             </div>
           </div>
         </div>
         <div className="d-flex align-items-center justify-content-center delete-container">
           <i className="material-icons delete"
-             onClick={() => this.delete(sid)}>delete</i>
+             onClick={() => this.delete(id)}>delete</i>
         </div>
       </div>
     );
