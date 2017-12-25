@@ -22,7 +22,7 @@ export default Router()
   .post('/completed', async (req, res) => {
     const {AccountSid, CallSid, From, To, RecordingSid, RecordingUrl} = req.body;
     await storeVoiceMessage(AccountSid, CallSid, From, To, RecordingSid, RecordingUrl);
-    await sendSmsMessage(To, From, 'Thank you for contacting us, will get back to you as shortly as we can');
+    await sendSmsMessage(To, From, 'Thank you for contacting us, we will get back to you as shortly as we can');
     res.type('text/xml');
     res.status(200).end();
   })

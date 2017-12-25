@@ -14,7 +14,7 @@ const commonConfig = {
     alias: {
       Api: path.resolve(__dirname, 'src/server/api'),
       Component: path.resolve(__dirname, 'src/app/component'),
-      Db: path.resolve(__dirname, 'src/app/db'),
+      Db: path.resolve(__dirname, 'src/server/db'),
       Route: path.resolve(__dirname, 'src/server/routes'),
       Service: path.resolve(__dirname, 'src/server/service'),
       Util: path.resolve(__dirname, 'src/app/util')
