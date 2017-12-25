@@ -1,6 +1,6 @@
 import twilioApi from 'Api/twilio.api';
 
-export {storeSmsMessage} from 'Db/sms-messages.db';
+export {fetchSmsMessages, storeSmsMessage} from 'Db/sms-messages.db';
 
 export const sendSmsMessage = async (from, to, body) => {
   try {

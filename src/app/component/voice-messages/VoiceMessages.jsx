@@ -37,11 +37,9 @@ class VoiceMessages extends Component {
   }
 
   render() {
-    let {voiceMessages, loading} = this.state;
+    const {voiceMessages, loading} = this.state;
     if (loading) {
-      return (
-        <Loader/>
-      );
+      return <Loader/>;
     } else if (!voiceMessages.length) {
       return (
         <div className="alert alert-info" role="alert">

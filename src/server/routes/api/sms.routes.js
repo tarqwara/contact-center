@@ -1,7 +1,12 @@
 import {Router} from 'express';
-import {sendSmsMessage, storeSmsMessage} from 'Service/sms.service';
+import {fetchSmsMessages, sendSmsMessage, storeSmsMessage} from 'Service/sms.service';
 
 export default Router()
+  .get('/', async (req, res) => {
+    const smsMessages = await fetchSmsMessages();
+    res.type('application/json');
+    res.send(smsMessages);
+  })
   .post('/:from/:to/:body', async (req, res) => {
     const {from, to, body} = req.params;
     const smsMessage = await sendSmsMessage(from, to, body);

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {ToastContainer, style} from 'react-toastify';
 import './App.scss';
-import VoiceMessages from './voice-messages/VoiceMessages';
+import Dashboard from 'Component/dashboard/Dashboard';
 
 style({
   colorSuccess: '#28a745'
@@ -20,7 +20,7 @@ class App extends Component {
           Contact center
         </h1>
         <hr/>
-        <VoiceMessages/>
+        <Dashboard/>
       </div>
     );
   }

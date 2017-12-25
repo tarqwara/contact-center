@@ -5,6 +5,7 @@ import swal from 'sweetalert';
 import axios from 'axios';
 import SmsForm from 'Component/sms-form/SmsForm';
 import './VoiceMessage.scss';
+import {formatDate} from 'Util/date.util';
 
 class VoiceMessage extends Component {
   constructor(props) {
@@ -31,10 +32,6 @@ class VoiceMessage extends Component {
     if (recordingUrl) {
       this.addListenedEvent(id);
     }
-  }
-
-  formatDate(date) {
-    return new Date(date).toLocaleString()
   }
 
   call(to) {
@@ -100,7 +97,7 @@ class VoiceMessage extends Component {
                   {from}
                 </h5>
                 <h6 className="card-subtitle text-muted">
-                  {this.formatDate(created)}
+                  {formatDate(created)}
                 </h6>
               </div>
             </div>
