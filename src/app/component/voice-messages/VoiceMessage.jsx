@@ -1,7 +1,9 @@
 import React, {Component} from 'react';
+import {render} from 'react-dom';
 import {toast} from 'react-toastify';
 import swal from 'sweetalert';
 import axios from 'axios';
+import SmsForm from 'Component/sms-form/SmsForm';
 import './VoiceMessage.scss';
 
 class VoiceMessage extends Component {
@@ -35,6 +37,29 @@ class VoiceMessage extends Component {
     return new Date(date).toLocaleString()
   }
 
+  call(to) {
+
+  }
+
+  onSmsSendingFinished(result) {
+    swal.close();
+    if (result === true) {
+      toast.success('Sms sent');
+    } else if (result === false) {
+      toast.error('Could not send sms');
+    }
+  }
+
+  async sendSms(from, to) {
+    const wrapper = document.createElement('div');
+    render(<SmsForm from={from} to={to} onFinished={this.onSmsSendingFinished}/>, wrapper);
+    const el = wrapper.firstChild;
+    swal({
+      content: el,
+      buttons: false
+    });
+  }
+
   async delete(id) {
     const confirm = await swal({
       title: "Are you sure?",
@@ -57,16 +82,16 @@ class VoiceMessage extends Component {
   }
 
   render() {
-    const {id, from, created, listened, recordingUrl} = this.props.message;
+    const {id, from, to, created, listened, recordingUrl} = this.props.message;
     return (
       <div
-        className="card bg-light border-primary d-flex flex-row mt-2">
+        className="card bg-light border-dark d-flex flex-row mt-2">
         <div className="card-body mr-5">
           <div className="d-flex justify-content-between">
             <div className="d-flex align-items-center">
               {
                 !listened &&
-                <div className="mr-3">
+                <div className="mr-3 icon-container new">
                   <i className="material-icons fiber-new">fiber_new</i>
                 </div>
               }
@@ -93,9 +118,34 @@ class VoiceMessage extends Component {
             </div>
           </div>
         </div>
-        <div className="d-flex align-items-center justify-content-center delete-container">
-          <i className="material-icons delete"
-             onClick={() => this.delete(id)}>delete</i>
+        <div className="d-flex">
+          <div className="icon-container call">
+            <i className="material-icons"
+               data-toggle="tooltip"
+               data-placement="top"
+               title="Call back"
+               onClick={() => this.call(from)}>
+              call
+            </i>
+          </div>
+          <div className="icon-container sms">
+            <i className="material-icons"
+               data-toggle="tooltip"
+               data-placement="top"
+               title="Send sms"
+               onClick={() => this.sendSms(to, from)}>
+              sms
+            </i>
+          </div>
+          <div className="icon-container delete">
+            <i className="material-icons"
+               data-toggle="tooltip"
+               data-placement="top"
+               title="Delete"
+               onClick={() => this.delete(id)}>
+              delete
+            </i>
+          </div>
         </div>
       </div>
     );

@@ -1,13 +1,12 @@
 import {Router} from 'express';
 import {
   fetchVoiceMessages,
-  createVoiceMessage,
+  storeVoiceMessage,
   createVoiceMessageTwiml,
-  sendSmsMessage,
-  updateVoiceMessageCompleted,
-  updateVoiceMessageListened,
+  updateVoiceMessageToListened,
   deleteVoiceMessage
 } from 'Service/voice.service';
+import {sendSmsMessage} from 'Service/sms.service';
 
 export default Router()
   .get('/', async (req, res) => {
@@ -22,14 +21,14 @@ export default Router()
   })
   .post('/completed', async (req, res) => {
     const {AccountSid, CallSid, From, To, RecordingSid, RecordingUrl} = req.body;
-    await createVoiceMessage(AccountSid, CallSid, From, To, RecordingSid, RecordingUrl);
-    sendSmsMessage('Thank you for contacting us, will get back to you as shortly as we can', To, From);
+    await storeVoiceMessage(AccountSid, CallSid, From, To, RecordingSid, RecordingUrl);
+    await sendSmsMessage(To, From, 'Thank you for contacting us, will get back to you as shortly as we can');
     res.type('text/xml');
     res.status(200).end();
   })
   .post('/:id/listened', async (req, res) => {
     const {id} = req.params;
-    await updateVoiceMessageListened(id);
+    await updateVoiceMessageToListened(id);
     res.type('application/json');
     res.status(200).end();
   })

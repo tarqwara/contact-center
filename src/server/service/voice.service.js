@@ -1,10 +1,9 @@
 import twilio from 'twilio';
-import twilioApi from 'Api/twilio.api';
 
 export {
   fetchVoiceMessages,
-  createVoiceMessage,
-  updateVoiceMessageListened,
+  storeVoiceMessage,
+  updateVoiceMessageToListened,
   deleteVoiceMessage
 } from 'Db/voice-messages.db';
 
@@ -19,10 +18,3 @@ export const createVoiceMessageTwiml = message => {
   twiml.hangup();
   return twiml;
 };
-
-export const sendSmsMessage = (body, from, to) =>
-  twilioApi.messages.create({
-    body,
-    from,
-    to
-  });

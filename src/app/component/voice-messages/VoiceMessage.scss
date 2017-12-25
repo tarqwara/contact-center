@@ -2,31 +2,42 @@
 @import "~bootstrap/scss/variables";
 
 .card {
-  .delete-container {
+  .icon-container {
     width: 60px;
-    background-color: $danger;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-    i.material-icons {
-      &.delete {
-        font-size: 24px;
-        color: $white;
+    &.new {
+      i.material-icons {
+        font-size: 36px;
+        color: $success;
 
         &:hover {
-          color: darken($white, 10%);
+          color: darken($success, 10%);
         }
       }
     }
-  }
 
-  i.material-icons {
-    cursor: pointer;
+    &.call {
+      background-color: $success;
+    }
 
-    &.fiber-new {
-      font-size: 36px;
-      color: $success;
+    &.sms {
+      background-color: $primary;
+    }
+
+    &.delete {
+      background-color: $danger;
+    }
+
+    i.material-icons {
+      font-size: 24px;
+      color: $white;
+      cursor: pointer;
 
       &:hover {
-        color: darken($success, 10%);
+        color: darken($white, 10%);
       }
     }
   }
