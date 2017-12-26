@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import VoiceMessages from 'Component/voice-messages/VoiceMessages';
-import SmsMessages from 'Component/sms-messages/SmsMessages';
+import VoiceMessages from './voice-messages/VoiceMessages';
+import SmsMessages from './sms-messages/SmsMessages';
 
 class Dashboard extends Component {
   constructor(props) {

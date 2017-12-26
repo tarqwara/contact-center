@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {ToastContainer, style} from 'react-toastify';
 import './App.scss';
-import Dashboard from 'Component/dashboard/Dashboard';
+import Dashboard from './dashboard/Dashboard';
 
 style({
   colorSuccess: '#28a745'

@@ -3,7 +3,7 @@ import {render} from 'react-dom';
 import {toast} from 'react-toastify';
 import swal from 'sweetalert';
 import axios from 'axios';
-import SmsForm from 'Component/sms-form/SmsForm';
+import SmsForm from './sms-form/SmsForm';
 import './VoiceMessage.scss';
 import {formatDate} from 'Util/date.util';
 

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import axios from 'axios';
 import Loader from 'Component/loader/Loader';
-import SmsMessage from 'Component/sms-messages/SmsMessage';
+import SmsMessage from './sms-message/SmsMessage';
 
 class SmsMessages extends Component {
   constructor(props) {

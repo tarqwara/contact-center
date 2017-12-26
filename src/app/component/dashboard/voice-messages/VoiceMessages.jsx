@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import axios from 'axios';
-import VoiceMessage from './VoiceMessage';
+import VoiceMessage from './voice-message/VoiceMessage';
 import Loader from 'Component/loader/Loader';
 
 class VoiceMessages extends Component {
