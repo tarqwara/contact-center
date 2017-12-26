@@ -27,6 +27,7 @@ Working demo here: <https://dry-hamlet-63473.herokuapp.com/>
 To leave a voice message, call the number **+1 424-888-5019**
 
 ## Architecture
+
 ##### Main frameworks and libraries:
 - Backend:
     - [Express](<https://expressjs.com/>)
@@ -85,3 +86,7 @@ src
 - Voice message can be responded back via an SMS message by clicking the SMS icon. It triggers an event that makes a `POST` request to `/api/sms` endpoint, which sends the SMS to the incoming phone number of the voice message and stores the SMS message to the database.
 - The stored SMS messages are fetched from the database via a `GET` request to `/api/sms` endpoint and displayed in the `SmsMessages` component.
 - Calling back - _Not implemented_
+
+## Scaling
+
+The application is rather easy to scale, the architecture is flexible to easily add new components, routes, services etc. Currently the app only has one route, but if there is a need for more, a frontend routing library like React Router should be added. It also might be useful to bring in Redux to hold the application state, but currently I didn't find it necessary. Another thing missing is a testing framework, which should also be easy to add. Since both the frontend and backend are written in Javascript, the same framework and setup can be used for testing both. Same goes with other development and build process tools like ESLint, Uglify, etc. In terms of business logic, the main assumption was that one number is set up to answer the calls. The backend logic and database tables support multiple numbers, however the UI should be modified to better display information about the number that answered the call. Or rather implement TaskRouter to support multiple workers, workflows etc.
